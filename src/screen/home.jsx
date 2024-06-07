@@ -63,7 +63,7 @@ export default function Home({ navigation }) {
     Geolocation.getCurrentPosition(
       position => {
         const { latitude, longitude } = position.coords;
-        console.log('Current position:', position);
+        // console.log('Current position:', position);
         setCurrentLocation({ latitude, longitude });
         setPreviousLocation({ latitude, longitude });
       },
@@ -82,7 +82,7 @@ export default function Home({ navigation }) {
       const watchID = Geolocation.watchPosition(
         position => {
           const { latitude, longitude } = position.coords;
-          console.log('New position:', position);
+          // console.log('New position:', position);
           const newLocation = { latitude, longitude };
 
           if (previousLocation) {
@@ -125,7 +125,10 @@ export default function Home({ navigation }) {
   const handleStop = () => {
     try {
       setIsTracking(false);
-      navigation.navigate('summary');
+      navigation.navigate('summary', {
+        time : timer,
+        distance: (distance / 1000).toFixed(2),
+      });
     } catch (error) {
       console.error("Error stopping tracking:", error);
     }
